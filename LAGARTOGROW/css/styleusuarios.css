@@ -1,0 +1,23 @@
+.user-section {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+}
+
+.manage-users-button {
+    position: absolute;
+    bottom: 10px; 
+    left: 10px;  
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px; 
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto; 
+}
+
+.manage-users-button:hover {
+    background-color: #45a049; 
+}
