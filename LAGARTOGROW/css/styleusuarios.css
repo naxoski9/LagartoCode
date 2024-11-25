@@ -1,0 +1,23 @@
+.user-section {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+}
+
+.manage-users-button {
+    position: absolute;
+    bottom: 10px; /* Coloca el botón a 10px desde la parte inferior */
+    left: 10px;  /* Coloca el botón a 10px desde el borde izquierdo */
+    background-color: #4CAF50; /* Color de fondo verde */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px; /* Tamaño de fuente pequeño */
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto; /* El tamaño se ajusta automáticamente */
+}
+
+.manage-users-button:hover {
+    background-color: #45a049; /* Color al pasar el cursor */
+}

@@ -1,0 +1,208 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar .user-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar .user-section .user-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.sidebar nav {
+    margin-bottom: 20px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+}
+
+.sidebar nav ul li button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar nav ul li button:hover {
+    background-color: #d0d0d0;
+}
+
+.logout-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff4f4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.main-content {
+    flex-grow: 1;
+    background-color: #f9f9f9;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.button-group {
+    margin-bottom: 20px;
+}
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    width: 220px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.add-offer-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-offer-btn:hover {
+    background-color: #218838;
+}
+
+.offer-container {
+    margin: 20px 0;
+}
+
+.offer-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.no-offers {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+}
+
+.button-group button {
+    padding: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.button-group button:hover {
+    background-color: #1976D2;
+}
+
+
+.logo {
+    width: 100px; 
+    height: auto;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.button-Cancelar, .button-Emitir, .button-Borrar {
+    margin-bottom: 20px;
+    text-align: left; 
+}
+
+.button-Cancelar button,
+.button-Emitir button,
+.button-Borrar button {
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.button-Cancelar button {
+    background-color: red;
+}
+
+.button-Cancelar button:hover {
+    background-color: #d21922;
+}
+
+.button-Emitir button {
+    background-color: rgb(0, 255, 47);
+}
+
+.button-Emitir button:hover {
+    background-color: #19d244;
+}
+
+.button-Borrar button {
+    background-color: red;
+}
+
+.button-Borrar button:hover {
+    background-color: #d21922;
+}
