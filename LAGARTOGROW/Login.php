@@ -1,45 +1,64 @@
 <?php
-// Inicia la respuesta JSON solo si es una solicitud AJAX de inicio de sesión
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['password'])) {
-    header('Content-Type: application/json');
+session_start();
 
-    // Conexión a la base de datos
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "lagartogrow_db";
+$host = 'localhost';
+$user = 'root'; 
+$password = '';
+$dbname = 'lagartogrow_db';
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $user, $password, $dbname);
 
-    // Verifica la conexión
-    if ($conn->connect_error) {
-        die(json_encode(["status" => "error", "message" => "Error de conexión a la base de datos"]));
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+$usuario_default = "profesora";
+$contraseña_default = "USM2024";
+$rango_default = "jefe";
+
+$query = "SELECT * FROM usuarios WHERE nombre = '$usuario_default'";
+$result = $conn->query($query);
+
+if ($result->num_rows == 0) {
+    $contraseña_encriptada = password_hash($contraseña_default, PASSWORD_DEFAULT);
+    $insert_query = "INSERT INTO usuarios (nombre, contraseña, rango) 
+                     VALUES ('$usuario_default', '$contraseña_encriptada', '$rango_default')";
+
+    if ($conn->query($insert_query) === TRUE) {
+        echo "Usuario 'profesora' agregado con éxito.";
+    } else {
+        echo "Error al agregar el usuario 'profesora': " . $conn->error;
     }
+}
 
-    // Recibe las credenciales del usuario
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['password'])) {
     $username = $conn->real_escape_string($_POST['username']);
     $password = $_POST['password'];
 
-    // Consulta para verificar el usuario
-    $sql = "SELECT contraseña FROM usuarios WHERE nombre = '$username'";
-    $result = $conn->query($sql);
+    $query = "SELECT id, nombre, contraseña, rango FROM usuarios WHERE nombre = '$username'";
+    $result = $conn->query($query);
 
-    if ($result->num_rows === 1) {
+    if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-
-        // Verifica la contraseña
         if (password_verify($password, $row['contraseña'])) {
-            echo json_encode(["status" => "success", "message" => "Inicio de sesión exitoso"]);
+            $_SESSION['usuario_id'] = $row['id'];
+            $_SESSION['usuario_nombre'] = $row['nombre'];
+            $_SESSION['usuario_rango'] = $row['rango'];
+
+            if ($row['rango'] === 'jefe' || $row['rango'] === 'usuario') {
+                header("Location: ../LAGARTOGROW/src/index.html");
+            } else if ($row['rango'] === 'proveedor') {
+                header("Location: ../LAGARTOGROW/src/seguimiento.php");
+            }
         } else {
-            echo json_encode(["status" => "error", "message" => "Contraseña incorrecta"]);
+            echo "<script>alert('Contraseña incorrecta');</script>";
         }
     } else {
-        echo json_encode(["status" => "error", "message" => "Usuario no encontrado"]);
+        echo "<script>alert('Usuario no encontrado');</script>";
     }
-
-    $conn->close();
-    exit;
 }
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -54,34 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'], $_POST['p
     <div class="login-container">
         <div class="login-box">
             <h2>Ingreso Sistema</h2>
-            <form id="loginForm" onsubmit="validateLogin(event)">
-                <input type="text" id="username" name="username" placeholder="Usuario" required>
-                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+            <form action="login.php" method="POST">
+                <input type="text" name="username" placeholder="Usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
                 <button type="submit">Iniciar sesión</button>
             </form>
         </div>
     </div>
-
-    <script>
-        function validateLogin(event) {
-            event.preventDefault();
-
-            const formData = new FormData(document.getElementById('loginForm'));
-
-            fetch('login.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    location.href = '../LAGARTOGROW/src/index.html';
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => console.error('Error al iniciar sesión:', error));
-        }
-    </script>
 </body>
 </html>
+
